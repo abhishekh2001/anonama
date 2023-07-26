@@ -1,10 +1,10 @@
 import express, { Express, Request, Response } from 'express'
-import dotenv from 'dotenv'
+import 'dotenv/config'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import reclaimRoute from './src/routes/reclaim/index'
-
-dotenv.config()
+import { connectDb } from './db'
+import ProofStatus from './src/model/ProofStatus'
 
 const app: Express = express()
 const port = process.env.PORT
@@ -18,6 +18,14 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server')
 })
 
-app.listen(port, () => {
-    console.log(`⚡️[server]: Server is running at http://localhost:${port}`)
-})
+connectDb()
+    .then(() => {
+        app.listen(port, () => {
+            console.log(
+                `⚡️[server]: Server is running at http://localhost:${port}`
+            )
+        })
+    })
+    .catch((err) => {
+        console.log('error -- ', (err as Error).toString())
+    })
