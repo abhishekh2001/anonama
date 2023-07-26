@@ -4,7 +4,6 @@ import cors from 'cors'
 import bodyParser from 'body-parser'
 import reclaimRoute from './src/routes/reclaim/index'
 import { connectDb } from './db'
-import ProofStatus from './src/model/ProofStatus'
 
 const app: Express = express()
 const port = process.env.PORT

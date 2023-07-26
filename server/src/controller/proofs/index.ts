@@ -1,15 +1,17 @@
-const insertProofTransactionStatus = (
-    callbackId: string,
-    status: string,
-    url: string
-) => {}
+import ProofStatus from '../../model/ProofStatus'
+
+const insertProofTransactionStatus = async (callbackId: string) => {
+    const newProofStat = new ProofStatus({
+        callbackId,
+        status: 'pending',
+    })
+
+    await newProofStat.save()
+}
 
 const retrieveProofTransactionStatus = (callbackId: string) => {}
-const updateProofTransactionStatus = (
-    callbackId: string,
-    data: any,
-    status: string
-) => {}
+
+const updateProofTransactionStatus = (callbackId: string, data: any) => {}
 
 export {
     insertProofTransactionStatus,

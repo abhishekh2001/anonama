@@ -37,7 +37,7 @@ router.get('/proof', async (req, res) => {
 router.get('/request-proofs', async (req, res) => {
     try {
         const { reclaimUrl, callbackId } = await getReclaimProofURL()
-        insertProofTransactionStatus(callbackId, 'pending', reclaimUrl)
+        await insertProofTransactionStatus(callbackId)
         res.json({ reclaimUrl, callbackId })
     } catch (error) {
         console.error('Error requesting proofs:', error)
@@ -55,7 +55,7 @@ router.post('/callback', async (req, res) => {
     try {
         const proofsData = await handleCallback(req.body)
         console.log('done handling callback')
-        await updateProofTransactionStatus(callbackId, proofsData, 'success')
+        await updateProofTransactionStatus(callbackId, proofsData)
         res.json({ success: true })
     } catch (error) {
         // console.log('error: ', error)
