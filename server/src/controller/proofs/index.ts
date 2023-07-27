@@ -25,13 +25,15 @@ const updateProofTransactionStatus = async (
     callbackId: string,
     data: IClaim
 ) => {
+    const claimData = new Claim(data)
+    await claimData.save()
+
     const result = await ProofStatus.updateOne(
         { callbackId },
-        { status: 'success', proofData: data }
+        { status: 'success', claim: claimData._id }
     )
 
-    const claimResult = new Claim(data)
-
+    console.log(`saved claimData: ${claimData} - ${claimData._id}`)
     console.log(`updated ${callbackId} successfully ${result}`)
 
     return result

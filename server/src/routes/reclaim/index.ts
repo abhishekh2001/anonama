@@ -8,7 +8,6 @@ import {
     retrieveProofTransactionStatus,
     updateProofTransactionStatus,
 } from '../../controller/proofs/index'
-import { IClaim } from '../../model/Claim.js'
 
 const router = express.Router()
 
