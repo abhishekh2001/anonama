@@ -1,9 +1,10 @@
-import { reclaimprotocol } from '@reclaimprotocol/reclaim-sdk'
+import { ProviderParams, reclaimprotocol } from '@reclaimprotocol/reclaim-sdk'
 import { IClaim } from '../../model/Claim'
+import { ClaimCategory } from '../../types/Claim'
 
 const reclaim = new reclaimprotocol.Reclaim()
 
-const getReclaimProofURL = async () => {
+const getReclaimProofURL = async (provider: ClaimCategory) => {
     console.log(process.env.CALLBACK_DOMAIN)
     const callback_url = `${process.env.CALLBACK_DOMAIN}/reclaim/callback/`
 
@@ -11,13 +12,13 @@ const getReclaimProofURL = async () => {
 
     try {
         const request = reclaim.requestProofs({
-            title: 'Facebook Coin',
+            title: provider,
             baseCallbackUrl: callback_url,
             requestedProofs: [
                 new reclaim.CustomProvider({
-                    provider: 'facebook-friends-count',
+                    provider: provider,
                     payload: {},
-                }),
+                } as ProviderParams),
             ],
         })
         // Store the callback Id and Reclaim URL in your database
@@ -55,10 +56,7 @@ const handleCallback = async (encProofs: string): Promise<IClaim> => {
         // Proofs are correct, handle them as needed
         // ... process the proofs and update your application's data
         const params = JSON.parse(proofs[0].parameters as string)
-        const fbFriends = params['friendsCount']
-        const userUrl = params['userURL']
 
-        console.log('data received from proofs:', fbFriends, userUrl)
         return {
             provider: proofs[0]['provider'],
             data: params,

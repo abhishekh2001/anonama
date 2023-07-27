@@ -8,6 +8,7 @@ import {
     retrieveProofTransactionStatus,
     updateProofTransactionStatus,
 } from '../../controller/proofs/index'
+import { ClaimCategory, isValueClaimCategory } from '../../types/Claim.js'
 
 const router = express.Router()
 
@@ -34,14 +35,21 @@ router.get('/proof', async (req, res) => {
 })
 
 // Define an endpoint for requesting proofs
-router.get('/request-proofs', async (req, res) => {
-    try {
-        const { reclaimUrl, callbackId } = await getReclaimProofURL()
-        await insertProofTransactionStatus(callbackId)
-        res.json({ reclaimUrl, callbackId })
-    } catch (error) {
-        console.error('Error requesting proofs:', error)
-        res.status(500).json({ error: 'Failed to request proofs' })
+router.get('/request-proofs/:provider', async (req, res) => {
+    const provider = req.params.provider
+    if (!isValueClaimCategory(provider)) {
+        res.status(500).json({ error: 'invalid provider' })
+    } else {
+        try {
+            const { reclaimUrl, callbackId } = await getReclaimProofURL(
+                provider as ClaimCategory
+            )
+            await insertProofTransactionStatus(callbackId)
+            res.json({ reclaimUrl, callbackId })
+        } catch (error) {
+            console.error('Error requesting proofs:', error)
+            res.status(500).json({ error: 'Failed to request proofs' })
+        }
     }
 })
 
