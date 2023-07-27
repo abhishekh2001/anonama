@@ -8,6 +8,7 @@ import {
     retrieveProofTransactionStatus,
     updateProofTransactionStatus,
 } from '../../controller/proofs/index'
+import { IClaim } from '../../model/Claim.js'
 
 const router = express.Router()
 
@@ -53,9 +54,9 @@ router.post('/callback', async (req, res) => {
     console.log(callbackId)
 
     try {
-        const proofsData = await handleCallback(req.body)
+        const claimData = await handleCallback(req.body)
         console.log('done handling callback')
-        await updateProofTransactionStatus(callbackId, proofsData)
+        await updateProofTransactionStatus(callbackId, claimData)
         res.json({ success: true })
     } catch (error) {
         // console.log('error: ', error)

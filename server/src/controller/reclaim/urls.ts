@@ -1,4 +1,5 @@
 import { reclaimprotocol } from '@reclaimprotocol/reclaim-sdk'
+import { IClaim } from '../../model/Claim'
 
 const reclaim = new reclaimprotocol.Reclaim()
 
@@ -35,7 +36,7 @@ const getReclaimProofURL = async () => {
 }
 
 // returns the param data
-const handleCallback = async (encProofs: string) => {
+const handleCallback = async (encProofs: string): Promise<IClaim> => {
     let proofs
 
     try {
@@ -59,8 +60,8 @@ const handleCallback = async (encProofs: string) => {
 
         console.log('data received from proofs:', fbFriends, userUrl)
         return {
-            fbFriends,
-            userUrl,
+            provider: proofs[0]['provider'],
+            data: params,
         }
     } else {
         // Proofs are not correct or verification failed

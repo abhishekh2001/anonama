@@ -9,7 +9,7 @@ const app: Express = express()
 const port = process.env.PORT
 
 app.use(cors())
-app.use(bodyParser.json())
+app.use(express.text({ type: '*/*' }))
 
 app.use('/reclaim', reclaimRoute)
 

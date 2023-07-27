@@ -1,3 +1,4 @@
+import Claim, { IClaim } from '../../model/Claim'
 import ProofStatus from '../../model/ProofStatus'
 
 const insertProofTransactionStatus = async (callbackId: string) => {
@@ -7,11 +8,34 @@ const insertProofTransactionStatus = async (callbackId: string) => {
     })
 
     await newProofStat.save()
+
+    return newProofStat._id
 }
 
-const retrieveProofTransactionStatus = (callbackId: string) => {}
+const retrieveProofTransactionStatus = async (callbackId: string) => {
+    const document = await ProofStatus.findOne({ callbackId })
+    if (!document) {
+        throw new Error(`Cannot find proof status for ${callbackId}`)
+    }
 
-const updateProofTransactionStatus = (callbackId: string, data: any) => {}
+    return document
+}
+
+const updateProofTransactionStatus = async (
+    callbackId: string,
+    data: IClaim
+) => {
+    const result = await ProofStatus.updateOne(
+        { callbackId },
+        { status: 'success', proofData: data }
+    )
+
+    const claimResult = new Claim(data)
+
+    console.log(`updated ${callbackId} successfully ${result}`)
+
+    return result
+}
 
 export {
     insertProofTransactionStatus,
