@@ -3,9 +3,13 @@ import { styled } from 'styled-components'
 export const FlexContainer = styled.div`
     padding: 2rem 2rem;
     display: flex;
-    flex-grow: 1;
-    min-height: 100%;
+    width: 50%;
     align-items: center;
+    justify-content: center;
+`
+
+export const HalfContainer = styled(FlexContainer)`
+    width: 50%;
 `
 
 export const PageContainer = styled.div`
@@ -24,3 +28,14 @@ export const BodyContainer = styled.div`
     display: flex;
     justify-content: center;
 `
+
+type ProviderHolderTypes = {
+    text: string
+}
+export const ProviderHolder: React.FC<ProviderHolderTypes> = ({ text }) => {
+    return (
+        <div className="h-fit w-fit p-2 m-2 bg-red-300 hover:bg-red-400 border border-red-500">
+            {text}
+        </div>
+    )
+}

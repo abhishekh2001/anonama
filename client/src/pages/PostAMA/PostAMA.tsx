@@ -1,9 +1,10 @@
 import { ChevronDownIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
 import {
     BodyContainer,
-    FlexContainer,
+    HalfContainer,
     HeaderContainer,
     PageContainer,
+    ProviderHolder,
 } from '../../components/Container'
 import useWalletStore from '../../stores/wallet'
 import {
@@ -17,6 +18,7 @@ import {
     CategoryText,
 } from './components'
 import { useState } from 'react'
+import { ReclaimURLDisplay } from '../../components/ReclaimHandler'
 
 const PostAMA: React.FC = () => {
     const walletAddress = useWalletStore((state) => state.walletAddress)
@@ -34,12 +36,15 @@ const PostAMA: React.FC = () => {
                 </button>
             </HeaderContainer>
             <BodyContainer className="bg-yellow-100">
-                <FlexContainer className="bg-orange-100">
+                <HalfContainer className="bg-orange-100">
                     <Categories />
-                </FlexContainer>
-                <FlexContainer className="bg-green-100">
-                    <p>Hi, {walletAddress}</p>
-                </FlexContainer>
+                </HalfContainer>
+                <HalfContainer className="bg-green-100">
+                    <ReclaimURLDisplay
+                        url="https://reactjs.org"
+                        displayText="React JS"
+                    />
+                </HalfContainer>
             </BodyContainer>
         </PageContainer>
     )
@@ -113,18 +118,7 @@ type ProviderDisplayT = {
     text: string
 }
 const ProviderDisplay: React.FC<ProviderDisplayT> = ({ text }) => {
-    return (
-        <span
-            style={{
-                display: 'flex',
-                padding: '0',
-                margin: '0',
-                whiteSpace: 'nowrap',
-            }}
-        >
-            {text}
-        </span>
-    )
+    return <ProviderHolder text={text} />
 }
 
 export default PostAMA
