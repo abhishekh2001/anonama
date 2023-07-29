@@ -1,5 +1,5 @@
 const ProviderDataTypeMap = {
-    'facebook-follower-count': 'followers',
+    'facebook-friends-count': 'followers',
     'binance-asset-balance': 'balance value',
     'google-login': 'works at',
 }

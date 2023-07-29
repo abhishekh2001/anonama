@@ -19,6 +19,7 @@ import {
 } from './components'
 import { useState } from 'react'
 import { ReclaimURLDisplay } from '../../components/ReclaimHandler'
+import useReclaimURLStore from '../../stores/reclaim'
 
 const PostAMA: React.FC = () => {
     const walletAddress = useWalletStore((state) => state.walletAddress)
@@ -61,8 +62,6 @@ const Categories: React.FC = () => {
                     providerDetails={verificationCategories[cat]}
                 />
             ))}
-            {/* <Category cat="socials" />
-            <Category cat="finance" /> */}
         </CategoriesContainer>
     )
 }
@@ -96,6 +95,7 @@ const Category: React.FC<CategoryPropsTypes> = ({
                         return (
                             <ProviderDisplay
                                 text={displayText}
+                                provider={provider}
                                 key={provider}
                             />
                         )
@@ -116,9 +116,18 @@ const Category: React.FC<CategoryPropsTypes> = ({
 
 type ProviderDisplayT = {
     text: string
+    provider: string
 }
-const ProviderDisplay: React.FC<ProviderDisplayT> = ({ text }) => {
-    return <ProviderHolder text={text} />
+const ProviderDisplay: React.FC<ProviderDisplayT> = ({ text, provider }) => {
+    const fetchProviderData = useReclaimURLStore(
+        (state) => state.fetchProviderURL
+    )
+    return (
+        <ProviderHolder
+            text={text}
+            onClick={() => fetchProviderData(provider, text)}
+        />
+    )
 }
 
 export default PostAMA

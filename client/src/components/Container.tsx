@@ -31,10 +31,17 @@ export const BodyContainer = styled.div`
 
 type ProviderHolderTypes = {
     text: string
+    onClick: React.MouseEventHandler
 }
-export const ProviderHolder: React.FC<ProviderHolderTypes> = ({ text }) => {
+export const ProviderHolder: React.FC<ProviderHolderTypes> = ({
+    text,
+    onClick,
+}) => {
     return (
-        <div className="h-fit w-fit p-2 m-2 bg-red-300 hover:bg-red-400 border border-red-500">
+        <div
+            className="h-fit w-fit p-2 m-2 bg-red-300 hover:bg-red-400 border border-red-500"
+            onClick={onClick}
+        >
             {text}
         </div>
     )
