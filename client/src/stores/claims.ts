@@ -19,7 +19,7 @@ interface reclaimURLStoreI {
     setClaimsData: (claimData: SingleClaimData) => void
 }
 
-const useReclaimURLStore = create<reclaimURLStoreI>((set) => ({
+const useReclaimMultiClaimDataStore = create<reclaimURLStoreI>((set) => ({
     multiClaimsData: [],
     setClaimsData: (claimData: SingleClaimData) => {
         const newClaim: SingleClaimData = {
@@ -32,4 +32,4 @@ const useReclaimURLStore = create<reclaimURLStoreI>((set) => ({
     },
 }))
 
-export default useReclaimURLStore
+export default useReclaimMultiClaimDataStore

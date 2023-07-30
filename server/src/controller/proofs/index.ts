@@ -1,5 +1,5 @@
-import Claim, { IClaim } from '../../model/Claim'
 import ProofStatus from '../../model/ProofStatus'
+import { IClaim } from '../../model/ProofStatus'
 
 const insertProofTransactionStatus = async (callbackId: string) => {
     const newProofStat = new ProofStatus({
@@ -25,16 +25,13 @@ const updateProofTransactionStatus = async (
     callbackId: string,
     data: IClaim
 ) => {
-    const claimData = new Claim(data)
-    await claimData.save()
-
     const result = await ProofStatus.updateOne(
         { callbackId },
-        { status: 'success', claim: claimData._id }
+        { status: 'success', claim: data }
     )
 
-    console.log(`saved claimData: ${claimData} - ${claimData._id}`)
     console.log(`updated ${callbackId} successfully ${result}`)
+    console.log(result)
 
     return result
 }
