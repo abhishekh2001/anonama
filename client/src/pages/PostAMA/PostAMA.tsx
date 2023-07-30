@@ -24,6 +24,7 @@ import {
 } from '../../components/ReclaimHandler'
 import useReclaimURLStore from '../../stores/reclaim'
 import useReclaimMultiClaimDataStore from '../../stores/claims'
+import { makePost } from '../../utils/posts'
 
 const PostAMA: React.FC = () => {
     const walletAddress = useWalletStore((state) => state.walletAddress)
@@ -31,6 +32,16 @@ const PostAMA: React.FC = () => {
     const claimsData = useReclaimMultiClaimDataStore(
         (state) => state.multiClaimsData
     )
+    const makePostOnClick = async () => {
+        const proofIDs = claimsData.map((claim) => claim._id)
+
+        try {
+            const postID = await makePost('0x123', proofIDs)
+            console.log('make post:', postID)
+        } catch (err) {
+            console.log('could not make post: ', err)
+        }
+    }
     console.log(import.meta.env.VITE_TW_CLIENT_ID)
     return (
         <PageContainer>
@@ -49,7 +60,10 @@ const PostAMA: React.FC = () => {
                 {/* <HalfContainer className="bg-orange-100"> */}
                 <HalfContainer className="gap-4">
                     <Categories />
-                    <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 border border-orange-700 rounded">
+                    <button
+                        onClick={makePostOnClick}
+                        className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 border border-orange-700 rounded"
+                    >
                         Post
                     </button>
                 </HalfContainer>

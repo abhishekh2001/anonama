@@ -15,6 +15,7 @@ export interface IClaim {
 }
 
 export type TSingleClaimData = {
+    _id: string
     status: ClaimStatusEnum
     providerDisplayText: string
     callbackId: string

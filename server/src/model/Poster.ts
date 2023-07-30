@@ -2,12 +2,12 @@ import { Schema, model, Document, Types } from 'mongoose'
 
 interface IPoster extends Document {
     walletAddress: string
-    claims: Types.ObjectId
+    posts: Types.ObjectId[]
 }
 
 const PosterSchema = new Schema<IPoster>({
     walletAddress: { type: String, required: true, unique: true },
-    claims: [{ type: Schema.ObjectId, ref: 'Claim' }],
+    posts: [{ type: Schema.ObjectId, ref: 'Post' }],
 })
 
 const Poster = model<IPoster>('Poster', PosterSchema)

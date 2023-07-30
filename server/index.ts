@@ -3,6 +3,7 @@ import 'dotenv/config'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import reclaimRoute from './src/routes/reclaim/index'
+import amaRoute from './src/routes/ama/ama'
 import { connectDb } from './db'
 
 const app: Express = express()
@@ -12,6 +13,7 @@ app.use(cors())
 app.use(express.text({ type: '*/*' }))
 
 app.use('/reclaim', reclaimRoute)
+app.use('/ama', amaRoute)
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Express + TypeScript Server')

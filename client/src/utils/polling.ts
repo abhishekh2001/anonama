@@ -20,6 +20,7 @@ const pollAndUpdateClaimState = (
         }
         clearInterval(interval)
         const claimData: TSingleClaimData = {
+            _id: document._id,
             providerDisplayText: document.claim.provider,
             status: ClaimStatusEnum.success,
             callbackId: document.callbackId as string,
