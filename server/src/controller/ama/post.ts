@@ -6,6 +6,15 @@ export const getAllPosts = async () => {
     return result
 }
 
+export const getPostFromPostID = async (postID: string) => {
+    const post = await Post.findOne({ _id: postID }).populate('proofs')
+    if (!post) {
+        throw new Error('post not found')
+    }
+
+    return post
+}
+
 export const getWalletPosts = async (walletAddress: string) => {
     const poster = await Poster.findOne({ walletAddress })
         .populate({

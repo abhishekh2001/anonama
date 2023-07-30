@@ -2,6 +2,7 @@ import express from 'express'
 import {
     createPost,
     getAllPosts,
+    getPostFromPostID,
     getWalletPosts,
 } from '../../controller/ama/post'
 import bodyParser from 'body-parser'
@@ -21,6 +22,15 @@ router.get('/posts', async (req, res) => {
 router.get('/posts/:walletAddress', async (req, res) => {
     try {
         const result = await getWalletPosts(req.params.walletAddress)
+        res.json({ document: result })
+    } catch (err) {
+        res.status(500).json({ error: (err as Error).toString() })
+    }
+})
+
+router.get('/post/:postID', async (req, res) => {
+    try {
+        const result = await getPostFromPostID(req.params.postID)
         res.json({ document: result })
     } catch (err) {
         res.status(500).json({ error: (err as Error).toString() })
