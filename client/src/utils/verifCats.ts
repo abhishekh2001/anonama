@@ -1,9 +1,32 @@
+import { IClaim } from '../stores/claims'
+
 export interface VerificationCategoriesI {
     [category: string]: {
         [provider: string]: {
             displayText: string
         }
     }
+}
+
+interface ProviderUtilsI {
+    [provider: string]: {
+        dataAccess: (params: IClaim['data']) => string
+    }
+}
+
+export const ProviderUtils: ProviderUtilsI = {
+    'facebook-friends-count': {
+        dataAccess: (params) => {
+            return 'num friends: ' + params?.friendsCount ?? '-'
+        },
+    },
+    'google-login': {
+        dataAccess: (params) => {
+            const email = params?.emailAddress
+            if (!email) return '-'
+            return 'works at: ' + email.split('@')[1].split('.')[0]
+        },
+    },
 }
 
 export const verificationCategories: VerificationCategoriesI = {

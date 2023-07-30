@@ -10,6 +10,7 @@ export const FlexContainer = styled.div`
 
 export const HalfContainer = styled(FlexContainer)`
     width: 50%;
+    flex-direction: column;
 `
 
 export const PageContainer = styled.div`

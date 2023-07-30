@@ -1,6 +1,6 @@
 import { ProviderParams, reclaimprotocol } from '@reclaimprotocol/reclaim-sdk'
-import { IClaim } from '../../model/Claim'
 import { ClaimCategory } from '../../types/Claim'
+import { IClaim } from '../../model/ProofStatus'
 
 const reclaim = new reclaimprotocol.Reclaim()
 

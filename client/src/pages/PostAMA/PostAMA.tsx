@@ -18,17 +18,25 @@ import {
     CategoryText,
 } from './components'
 import { useState } from 'react'
-import { ReclaimURLDisplay } from '../../components/ReclaimHandler'
+import {
+    DisplayVerifiedClaims,
+    ReclaimURLDisplay,
+} from '../../components/ReclaimHandler'
 import useReclaimURLStore from '../../stores/reclaim'
+import useReclaimMultiClaimDataStore from '../../stores/claims'
 
 const PostAMA: React.FC = () => {
     const walletAddress = useWalletStore((state) => state.walletAddress)
     const setWalletAddress = useWalletStore((state) => state.setWalletAddress)
+    const claimsData = useReclaimMultiClaimDataStore(
+        (state) => state.multiClaimsData
+    )
     console.log(import.meta.env.VITE_TW_CLIENT_ID)
     return (
         <PageContainer>
-            <HeaderContainer className="bg-blue-100">
-                <h1 className="text-3xl font-bold underline">Post an AMA</h1>
+            {/* <HeaderContainer className="bg-blue-100"> */}
+            <HeaderContainer>
+                <p className="text-xl font-bold">Post an AMA</p>
                 <button
                     className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
                     onClick={() => setWalletAddress('0x123456')}
@@ -36,15 +44,22 @@ const PostAMA: React.FC = () => {
                     Connect wallet
                 </button>
             </HeaderContainer>
-            <BodyContainer className="bg-yellow-100">
-                <HalfContainer className="bg-orange-100">
+            {/* <BodyContainer className="bg-yellow-100"> */}
+            <BodyContainer>
+                {/* <HalfContainer className="bg-orange-100"> */}
+                <HalfContainer className="gap-4">
                     <Categories />
+                    <button className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 border border-orange-700 rounded">
+                        Post
+                    </button>
                 </HalfContainer>
-                <HalfContainer className="bg-green-100">
+                {/* <HalfContainer className="bg-green-100 flex flex-col"> */}
+                <HalfContainer className="flex flex-col gap-4">
                     <ReclaimURLDisplay
                         url="https://reactjs.org"
                         displayText="React JS"
                     />
+                    <DisplayVerifiedClaims claimData={claimsData} />
                 </HalfContainer>
             </BodyContainer>
         </PageContainer>

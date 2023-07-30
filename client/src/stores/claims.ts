@@ -1,28 +1,35 @@
 import { create } from 'zustand'
 
-enum ClaimStatusEnum {
+export enum ClaimStatusEnum {
     fetching,
     success,
     fail,
     empty,
+    remove,
 }
 
-type SingleClaimData = {
-    claimID: string | undefined
+export interface IClaim {
+    provider: string
+    data?: { [key: string]: string }
+    createdAt?: Date
+}
+
+export type TSingleClaimData = {
     status: ClaimStatusEnum
-    providerDisplayText: string | undefined
+    providerDisplayText: string
     callbackId: string
+    claim: IClaim
 }
 
 interface reclaimURLStoreI {
-    multiClaimsData: SingleClaimData[]
-    setClaimsData: (claimData: SingleClaimData) => void
+    multiClaimsData: TSingleClaimData[]
+    setClaimsData: (claimData: TSingleClaimData) => void
 }
 
 const useReclaimMultiClaimDataStore = create<reclaimURLStoreI>((set) => ({
     multiClaimsData: [],
-    setClaimsData: (claimData: SingleClaimData) => {
-        const newClaim: SingleClaimData = {
+    setClaimsData: (claimData: TSingleClaimData) => {
+        const newClaim: TSingleClaimData = {
             ...claimData,
             status: ClaimStatusEnum.success,
         }

@@ -8,6 +8,7 @@ const CategoriesContainerC = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
+    width: 100%;
     gap: 25px;
 `
 export const CategoriesContainer: React.FC<ChildrenPropsT> = ({

@@ -2,6 +2,10 @@ import { QRCodeSVG } from 'qrcode.react'
 import useReclaimURLStore from '../stores/reclaim'
 import { useEffect } from 'react'
 import { pollAndUpdateClaimState } from '../utils/polling'
+import useReclaimMultiClaimDataStore, {
+    TSingleClaimData,
+} from '../stores/claims'
+import { ProviderUtils } from '../utils/verifCats'
 
 type PropsT = {
     url: string
@@ -11,17 +15,20 @@ export const ReclaimURLDisplay: React.FC<PropsT> = ({ url }) => {
     console.log(url)
 
     const reclaimURLData = useReclaimURLStore((state) => state.reclaimURLData)
+    const setClaimsData = useReclaimMultiClaimDataStore(
+        (state) => state.setClaimsData
+    )
 
     useEffect(() => {
         console.log('new data: ', reclaimURLData)
         if (reclaimURLData.callbackId)
-            pollAndUpdateClaimState(reclaimURLData.callbackId)
-    }, [reclaimURLData])
+            pollAndUpdateClaimState(reclaimURLData.callbackId, setClaimsData)
+    }, [reclaimURLData, setClaimsData])
 
     useEffect(() => {}, [reclaimURLData])
 
-    return (
-        <div className="space-y-4">
+    return reclaimURLData.reclaimUrl ? (
+        <div className="space-y-4 border-2 border-slate-900 p-2 rounded-md ">
             <p className="text-xl">{reclaimURLData.providerDisplayText}</p>
             <QRCodeSVG value={reclaimURLData.reclaimUrl as string} />
             <div>
@@ -29,6 +36,30 @@ export const ReclaimURLDisplay: React.FC<PropsT> = ({ url }) => {
                     {reclaimURLData.reclaimUrl}
                 </a>
             </div>
+        </div>
+    ) : null
+}
+
+type DisplayVerifiedClaimsT = {
+    claimData: TSingleClaimData[]
+}
+export const DisplayVerifiedClaims: React.FC<DisplayVerifiedClaimsT> = ({
+    claimData,
+}) => {
+    return (
+        <div>
+            {claimData.map((claim) => {
+                return (
+                    <div
+                        key={claim.callbackId}
+                        className="bg-gradient-to-r from-slate-800 to-slate-950 text-3xl my-3 text-slate-50 p-3 shadow-md hover:shadow-lg"
+                    >
+                        {ProviderUtils[claim.claim.provider].dataAccess(
+                            claim.claim.data
+                        )}
+                    </div>
+                )
+            })}
         </div>
     )
 }
