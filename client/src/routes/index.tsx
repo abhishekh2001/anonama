@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom'
 import App from '../App'
 import PostAMA from '../pages/PostAMA/PostAMA'
 import ViewPost from '../pages/ViewPosts/ViewPost'
+import MakePost from '../pages/MakePost/MakePost'
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
     {
         path: '/viewPost',
         element: <ViewPost />,
+    },
+    {
+        path: '/makePost',
+        element: <MakePost />,
     },
 ])
 
