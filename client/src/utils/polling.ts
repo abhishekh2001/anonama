@@ -3,7 +3,8 @@ import { ClaimStatusEnum, TSingleClaimData } from '../stores/claims'
 
 const pollAndUpdateClaimState = (
     callbackId: string,
-    setData: (d: TSingleClaimData) => void
+    setData: (d: TSingleClaimData) => void,
+    cleanUp: () => void
 ) => {
     const interval = setInterval(async () => {
         const url = `${
@@ -31,6 +32,7 @@ const pollAndUpdateClaimState = (
             },
         }
         setData(claimData)
+        cleanUp()
     }, 10000)
 }
 

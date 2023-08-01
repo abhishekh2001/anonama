@@ -12,6 +12,8 @@ type CVRPropsT = {
 import { Fragment, useRef } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
+import useReclaimMultiClaimDataStore from '../stores/claims'
+import { pollAndUpdateClaimState } from '../utils/polling'
 
 export const Example: React.FC<CVRPropsT> = ({
     provider,
@@ -21,20 +23,34 @@ export const Example: React.FC<CVRPropsT> = ({
 }) => {
     console.log('display modal for ', provider)
 
+    const setClaimsData = useReclaimMultiClaimDataStore(
+        (state) => state.setClaimsData
+    )
     const reclaimState = useReclaimURLStore()
-    const { fetchProviderURL, reclaimURLData } = reclaimState
+    const { fetchProviderURL, reclaimURLData, resetURLData } = reclaimState
+
+    const cleanUp = () => {
+        resetURLData()
+        onCloseSetState(false)
+    }
 
     useEffect(() => {
         console.log('Example rendered')
     }, [])
 
     useEffect(() => {
-        console.log('useEffect 3x running')
-        console.log(fetchProviderURL)
-        console.log(displayText)
-        console.log(provider)
         if (provider) fetchProviderURL(provider, displayText)
     }, [provider, fetchProviderURL, displayText])
+
+    useEffect(() => {
+        console.log('new data: ', reclaimURLData)
+        if (reclaimURLData.callbackId)
+            pollAndUpdateClaimState(
+                reclaimURLData.callbackId,
+                setClaimsData,
+                cleanUp
+            )
+    }, [reclaimURLData, setClaimsData, cleanUp])
 
     useEffect(() => {
         console.log('have reclaimData: ', reclaimURLData)

@@ -16,14 +16,22 @@ interface reclaimURLStoreI {
         callbackId: string | undefined
     }
     fetchProviderURL: (provider: string, providerDisplayText: string) => void
+    resetURLData: () => void
+}
+
+const initData = {
+    status: ReclaimURLStatusEnum.empty,
+    providerDisplayText: undefined,
+    reclaimUrl: undefined,
+    callbackId: undefined,
 }
 
 const useReclaimURLStore = create<reclaimURLStoreI>((set) => ({
-    reclaimURLData: {
-        status: ReclaimURLStatusEnum.empty,
-        providerDisplayText: undefined,
-        reclaimUrl: undefined,
-        callbackId: undefined,
+    reclaimURLData: initData,
+    resetURLData: () => {
+        set({
+            reclaimURLData: initData,
+        })
     },
     fetchProviderURL: async (provider: string, providerDisplayText: string) => {
         const url = `${
