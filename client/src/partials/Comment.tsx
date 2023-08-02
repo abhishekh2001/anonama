@@ -34,9 +34,11 @@ const CommentDisplay: React.FC<CommentProps> = ({ comment, onSubmit }) => {
                     </div>
                 )}
             </div>
-            <p className="text-sm ml-4 mt-4">
-                {comment.childComments?.[0]?.text}
-            </p>
+            <div>
+                <p className="text-sm ml-4 mt-4">
+                    {comment.childComments?.[0]?.text}
+                </p>
+            </div>
         </div>
     )
 }
