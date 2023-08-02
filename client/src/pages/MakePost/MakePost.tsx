@@ -6,6 +6,7 @@ import ClaimViewer from '../../partials/PostClaimsDisplay'
 import useReclaimMultiClaimDataStore, {
     TSingleClaimData,
 } from '../../stores/claims'
+import { makePost } from '../../utils/posts'
 
 type ModalPropType = {
     provider: string
@@ -20,6 +21,17 @@ const MakePost: React.FC = () => {
     const multiClaimsData = useReclaimMultiClaimDataStore(
         (state) => state.multiClaimsData
     )
+
+    const makePostOnClick = async () => {
+        const proofIDs = multiClaimsData.map((claim) => claim._id)
+
+        try {
+            const postID = await makePost('0x123', proofIDs)
+            console.log('made post:', postID)
+        } catch (err) {
+            console.log('could not make post: ', err)
+        }
+    }
 
     const handleCategoryClick = (provider: string, displayText: string) => {
         console.log('click registered for ', provider)
@@ -60,7 +72,10 @@ const MakePost: React.FC = () => {
                     <div className="sm:flex sm:justify-between sm:items-center mb-8">
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
-                                <button className="btn bg-indigo-500 hover:bg-indigo-600 text-white">
+                                <button
+                                    className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
+                                    onClick={makePostOnClick}
+                                >
                                     <svg
                                         className="w-4 h-4 fill-current opacity-50 shrink-0"
                                         viewBox="0 0 16 16"

@@ -3,8 +3,14 @@ import App from '../App'
 import PostAMA from '../pages/PostAMA/PostAMA'
 import ViewPost from '../pages/ViewPosts/ViewPost'
 import MakePost from '../pages/MakePost/MakePost'
+import Post from '../pages/post/Post'
+import HomePage from '../pages/Homepage/Homepage'
 
 const router = createBrowserRouter([
+    {
+        path: '/',
+        element: <HomePage />,
+    },
     {
         path: '/app',
         element: <App />,
@@ -20,6 +26,10 @@ const router = createBrowserRouter([
     {
         path: '/makePost',
         element: <MakePost />,
+    },
+    {
+        path: '/view/:id',
+        element: <Post />,
     },
 ])
 

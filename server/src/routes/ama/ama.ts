@@ -1,5 +1,7 @@
 import express from 'express'
 import {
+    addCommentToComment,
+    addCommentToPost,
     createPost,
     getAllPosts,
     getPostFromPostID,
@@ -49,6 +51,42 @@ router.post('/post', async (req, res) => {
         } catch (err) {
             console.log(err)
             res.status(400).json({ error: (err as Error).toString() })
+        }
+    }
+})
+
+router.post('/comment/:postID', async (req, res) => {
+    const doc = JSON.parse(req.body)
+    const postID = req.params.postID
+
+    if (!doc.userWallet) {
+        res.status(400).json({ error: 'requires userWallet' })
+    } else if (!doc.text) {
+        res.status(400).json({ error: 'comment text required' })
+    } else {
+        try {
+            const updateRes = await addCommentToPost(postID, doc)
+            res.json({ details: updateRes })
+        } catch (err) {
+            res.status(500).json({ error: (err as Error).toString() })
+        }
+    }
+})
+router.post('/commentResponse/:parentCommentID', async (req, res) => {
+    const parentCommentID = req.params.parentCommentID
+    const doc = JSON.parse(req.body)
+
+    if (!doc.userWallet) {
+        res.status(400).json({ error: 'requires userWallet' })
+    } else if (!doc.text) {
+        res.status(400).json({ error: 'comment text required' })
+    } else {
+        try {
+            console.log(parentCommentID)
+            const udpatedRes = await addCommentToComment(parentCommentID, doc)
+            res.json({ details: udpatedRes })
+        } catch (err) {
+            res.status(500).json({ error: (err as Error).toString() })
         }
     }
 })

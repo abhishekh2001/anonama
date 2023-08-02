@@ -1,9 +1,24 @@
 import axios from 'axios'
 import { TSingleClaimData } from '../stores/claims'
 
+export interface IComment {
+    _id: string
+    userWallet: string
+    text: string
+    childComments: IComment[]
+    createdAt?: Date
+}
 export interface IPost {
     _id: string
     proofs: TSingleClaimData[]
+    comments?: IComment[]
+}
+
+export const getAllPosts = async () => {
+    const url = `${import.meta.env.VITE_BASE_URL}/ama/posts`
+    const response = await axios.get(url)
+    console.log('got response:', response)
+    return response.data.document
 }
 
 export const getWalletPosts = async (walletAddress: string) => {
@@ -29,4 +44,38 @@ export const makePost = async (walletAddress: string, proofIDs: string[]) => {
     const d: { postID?: string } = response.data
     if (!d?.postID) throw new Error('unable to make post')
     return d.postID
+}
+
+export const makeCommentOnPost = async (
+    userWallet: string,
+    text: string,
+    postID: string
+) => {
+    const data = {
+        userWallet,
+        text,
+    }
+
+    const url = `${import.meta.env.VITE_BASE_URL}/ama/comment/${postID}`
+    const response = await axios.post(url, data)
+    const commentID = response?.data?.details
+    return commentID
+}
+
+export const makeCommentOnComment = async (
+    userWallet: string,
+    text: string,
+    commentID: string
+) => {
+    const data = {
+        userWallet,
+        text,
+    }
+
+    const url = `${
+        import.meta.env.VITE_BASE_URL
+    }/ama/commentResponse/${commentID}`
+    const response = await axios.post(url, data)
+    const newCommentID = response?.data?.details
+    return newCommentID
 }

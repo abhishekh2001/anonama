@@ -24,8 +24,8 @@ const ShowPostDetails: React.FC<PostDisplayT> = ({ postID }) => {
     const [post, setPost] = useState<IPost>()
 
     useEffect(() => {
-        getSinglePost(postID).then((post) => setPost(post))
-    })
+        if (postID) getSinglePost(postID).then((post) => setPost(post))
+    }, [postID])
 
     return (
         <PageContainer>

@@ -47,12 +47,12 @@ export const DisplayVerifiedClaims: React.FC<DisplayVerifiedClaimsT> = ({
     claimData,
 }) => {
     return (
-        <div>
+        <div className="flex">
             {claimData.map((claim) => {
                 return (
                     <div
                         key={claim.callbackId}
-                        className="bg-gradient-to-r from-slate-800 to-slate-950 text-3xl my-3 text-slate-50 p-3 shadow-md hover:shadow-lg"
+                        className="bg-indigo-500 text-xs my-3 text-slate-50 p-3 shadow-md"
                     >
                         {ProviderUtils[claim.claim.provider].dataAccess(
                             claim.claim.data
