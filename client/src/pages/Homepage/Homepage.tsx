@@ -15,7 +15,7 @@ const HomePage = () => {
                 <Header
                     sidebarOpen={true}
                     headerTitle={'Home'}
-                    setSidebarOpen={(val) => {}}
+                    setSidebarOpen={() => {}}
                 />
                 <main>
                     <div className="sm:flex sm:justify-between sm:items-center mb-8">

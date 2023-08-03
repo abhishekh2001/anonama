@@ -3,9 +3,7 @@ import { Example } from '../../components/ClaimVerificationRequest'
 import Sidebar from '../../partials/Sidebar'
 import Header from '../../partials/Header'
 import ClaimViewer from '../../partials/PostClaimsDisplay'
-import useReclaimMultiClaimDataStore, {
-    TSingleClaimData,
-} from '../../stores/claims'
+import useReclaimMultiClaimDataStore from '../../stores/claims'
 import { makePost } from '../../utils/posts'
 
 type ModalPropType = {
@@ -65,7 +63,7 @@ const MakePost: React.FC = () => {
                 <Header
                     sidebarOpen={true}
                     headerTitle={'Post an AMA'}
-                    setSidebarOpen={(val) => {}}
+                    setSidebarOpen={() => {}}
                 />
 
                 <main>

@@ -6,7 +6,6 @@ import {
     PageContainer,
     ProviderHolder,
 } from '../../components/Container'
-import useWalletStore from '../../stores/wallet'
 import {
     VerificationCategoriesI,
     VerificationCategoryT,
@@ -27,8 +26,6 @@ import useReclaimMultiClaimDataStore from '../../stores/claims'
 import { makePost } from '../../utils/posts'
 
 const PostAMA: React.FC = () => {
-    const walletAddress = useWalletStore((state) => state.walletAddress)
-    const setWalletAddress = useWalletStore((state) => state.setWalletAddress)
     const claimsData = useReclaimMultiClaimDataStore(
         (state) => state.multiClaimsData
     )
@@ -48,10 +45,7 @@ const PostAMA: React.FC = () => {
             {/* <HeaderContainer className="bg-blue-100"> */}
             <HeaderContainer>
                 <p className="text-xl font-bold">Post an AMA</p>
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-                    onClick={() => setWalletAddress('0x123456')}
-                >
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                     Connect wallet
                 </button>
             </HeaderContainer>

@@ -207,7 +207,7 @@ const Sidebar: React.FC<SidebarPropsT> = ({ handleCategoryClick }) => {
                         </h3>
                         <ul className="mt-3">
                             {/* Authentication */}
-                            <SidebarLinkGroup>
+                            <SidebarLinkGroup activecondition={false}>
                                 {(handleClick, open) => {
                                     return (
                                         <React.Fragment>
@@ -306,7 +306,7 @@ const Sidebar: React.FC<SidebarPropsT> = ({ handleCategoryClick }) => {
                                 }}
                             </SidebarLinkGroup>
                             {/* Onboarding */}
-                            <SidebarLinkGroup>
+                            <SidebarLinkGroup activecondition={false}>
                                 {(handleClick, open) => {
                                     return (
                                         <React.Fragment>

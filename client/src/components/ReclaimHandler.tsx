@@ -22,7 +22,11 @@ export const ReclaimURLDisplay: React.FC<PropsT> = ({ url }) => {
     useEffect(() => {
         console.log('new data: ', reclaimURLData)
         if (reclaimURLData.callbackId)
-            pollAndUpdateClaimState(reclaimURLData.callbackId, setClaimsData)
+            pollAndUpdateClaimState(
+                reclaimURLData.callbackId,
+                setClaimsData,
+                () => {}
+            )
     }, [reclaimURLData, setClaimsData])
 
     useEffect(() => {}, [reclaimURLData])

@@ -47,7 +47,7 @@ const ShowPostDetails: React.FC<PostDisplayT> = ({ postID }) => {
                 <Header
                     sidebarOpen={true}
                     headerTitle={'view'}
-                    setSidebarOpen={(val) => {}}
+                    setSidebarOpen={() => {}}
                 />
 
                 <main>

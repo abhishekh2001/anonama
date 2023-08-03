@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import {
     BodyContainer,
-    FlexContainer,
     HeaderContainer,
     PageContainer,
 } from '../../components/Container'
@@ -38,10 +37,7 @@ const ShowPostDetails: React.FC<PostDisplayT> = ({ postID }) => {
                         Ask
                     </button>
                 </div>
-                <button
-                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
-                    onClick={() => setWalletAddress('0x123456')}
-                >
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
                     Connect wallet
                 </button>
             </HeaderContainer>
