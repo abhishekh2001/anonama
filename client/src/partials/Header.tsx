@@ -1,6 +1,7 @@
 import React from 'react'
-import ConnectWalletButton from '../components/WalletConnect'
+// import ConnectWalletButton from '../components/WalletConnect'
 import { Link } from 'react-router-dom'
+import { ConnectButton } from '@rainbow-me/rainbowkit'
 
 // import SearchModal from '../components/ModalSearch'
 // import Notifications from '../components/DropdownNotifications'
@@ -77,7 +78,8 @@ const Header: React.FC<HeaderProps> = ({
                         <ThemeToggle /> */}
                         {/*  Divider */}
                         <hr className="w-px h-6 bg-slate-200 dark:bg-slate-700 border-none" />
-                        <ConnectWalletButton align="right" />
+                        {/* <ConnectWalletButton align="right" /> */}
+                        <ConnectButton />
                     </div>
                 </div>
             </div>

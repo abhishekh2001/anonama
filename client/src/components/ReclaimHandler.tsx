@@ -51,7 +51,7 @@ export const DisplayVerifiedClaims: React.FC<DisplayVerifiedClaimsT> = ({
     claimData,
 }) => {
     return (
-        <div className="flex">
+        <div className="flex gap-2">
             {claimData.map((claim) => {
                 return (
                     <div
