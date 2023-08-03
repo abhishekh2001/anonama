@@ -89,7 +89,12 @@ export const createPost = async (
     body: string
 ) => {
     console.log('save with title: ', title)
-    let post = new Post({ proofs: proofIDs, title: title, body: body })
+    let post = new Post({
+        proofs: proofIDs,
+        title: title,
+        body: body,
+        walletAddress: walletAddress,
+    })
     await post.save()
 
     let poster = await Poster.findOne({ walletAddress })

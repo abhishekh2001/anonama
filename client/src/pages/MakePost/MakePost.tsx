@@ -5,6 +5,7 @@ import Header from '../../partials/Header'
 import ClaimViewer from '../../partials/PostClaimsDisplay'
 import useReclaimMultiClaimDataStore from '../../stores/claims'
 import { makePost } from '../../utils/posts'
+import { useAccount } from 'wagmi'
 
 type ModalPropType = {
     provider: string
@@ -12,6 +13,8 @@ type ModalPropType = {
 }
 
 const MakePost: React.FC = () => {
+    const [error, setError] = useState<string | null>(null)
+    const { isConnected, address } = useAccount()
     const textAreaRef = useRef<HTMLTextAreaElement>(null)
     const titleInput = useRef<HTMLInputElement>(null)
     const [providerDetails, setProviderDetails] =
@@ -21,21 +24,36 @@ const MakePost: React.FC = () => {
         (state) => state.multiClaimsData
     )
 
+    const clearAlert = () => {
+        setError(null)
+    }
+
     const makePostOnClick = async () => {
         const proofIDs = multiClaimsData.map((claim) => claim._id)
         if (!textAreaRef.current || !titleInput.current) {
-            throw new Error('empty text fields')
+            setError('Error content')
+            return
+        }
+
+        if (!textAreaRef.current.value || !titleInput.current.value) {
+            setError('Empty text')
+        }
+
+        if (!isConnected) {
+            setError('Wallet address must be connected')
+            return
         }
 
         console.log(
             'have: ',
             titleInput.current.value,
-            textAreaRef.current.value
+            textAreaRef.current.value,
+            address
         )
 
         try {
             const postID = await makePost(
-                '0x123',
+                address?.toString() ?? '-',
                 proofIDs,
                 titleInput.current.value,
                 textAreaRef.current.value
@@ -85,6 +103,25 @@ const MakePost: React.FC = () => {
                     <div className="sm:flex sm:justify-between sm:items-center mb-8">
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             <div className="grid grid-flow-col sm:auto-cols-max justify-start sm:justify-end gap-2">
+                                {error !== null && (
+                                    <div
+                                        className="bg-red-100 border border-red-400 text-red-700 px-2 text-sm rounded flex content-center items-center"
+                                        role="alert"
+                                    >
+                                        <span className="">{error}</span>
+                                        <span onClick={clearAlert}>
+                                            <svg
+                                                className="fill-current h-6 w-6 text-red-500"
+                                                role="button"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                viewBox="0 0 20 20"
+                                            >
+                                                <title>Close</title>
+                                                <path d="M14.348 14.849a1.2 1.2 0 0 1-1.697 0L10 11.819l-2.651 3.029a1.2 1.2 0 1 1-1.697-1.697l2.758-3.15-2.759-3.152a1.2 1.2 0 1 1 1.697-1.697L10 8.183l2.651-3.031a1.2 1.2 0 1 1 1.697 1.697l-2.758 3.152 2.758 3.15a1.2 1.2 0 0 1 0 1.698z" />
+                                            </svg>
+                                        </span>
+                                    </div>
+                                )}
                                 <button
                                     className="btn bg-indigo-500 hover:bg-indigo-600 text-white"
                                     onClick={makePostOnClick}

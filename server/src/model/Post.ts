@@ -21,6 +21,7 @@ interface IPost extends Document {
     body: string
     proofs: Types.ObjectId
     comments: Types.ObjectId[]
+    walletAddress: string
 }
 
 const PostSchema = new Schema<IPost>({
@@ -28,6 +29,7 @@ const PostSchema = new Schema<IPost>({
     body: { type: String, required: true },
     proofs: [{ type: Schema.Types.ObjectId, ref: 'ProofStatus' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
+    walletAddress: { type: String, required: true },
 })
 
 const Post = model<IPost>('Post', PostSchema)
