@@ -28,6 +28,7 @@ const Sidebar: React.FC<SidebarPropsT> = ({ handleCategoryClick }) => {
     )
 
     // close if the esc key is pressed
+    // fix this
 
     return (
         <div>
