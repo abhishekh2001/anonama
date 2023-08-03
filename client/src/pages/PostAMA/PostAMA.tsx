@@ -23,21 +23,19 @@ import {
 } from '../../components/ReclaimHandler'
 import useReclaimURLStore from '../../stores/reclaim'
 import useReclaimMultiClaimDataStore from '../../stores/claims'
-import { makePost } from '../../utils/posts'
 
 const PostAMA: React.FC = () => {
     const claimsData = useReclaimMultiClaimDataStore(
         (state) => state.multiClaimsData
     )
     const makePostOnClick = async () => {
-        const proofIDs = claimsData.map((claim) => claim._id)
-
-        try {
-            const postID = await makePost('0x123', proofIDs)
-            console.log('make post:', postID)
-        } catch (err) {
-            console.log('could not make post: ', err)
-        }
+        // const proofIDs = claimsData.map((claim) => claim._id)
+        // try {
+        //     const postID = await makePost('0x123', proofIDs)
+        //     console.log('make post:', postID)
+        // } catch (err) {
+        //     console.log('could not make post: ', err)
+        // }
     }
     console.log(import.meta.env.VITE_TW_CLIENT_ID)
     return (

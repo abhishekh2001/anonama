@@ -10,6 +10,8 @@ export interface IComment {
 }
 export interface IPost {
     _id: string
+    title: string
+    body: string
     proofs: TSingleClaimData[]
     comments?: IComment[]
 }
@@ -37,9 +39,19 @@ export const getSinglePost = async (postID: string) => {
     return res
 }
 
-export const makePost = async (walletAddress: string, proofIDs: string[]) => {
+export const makePost = async (
+    walletAddress: string,
+    proofIDs: string[],
+    title: string,
+    body: string
+) => {
     const url = `${import.meta.env.VITE_BASE_URL}/ama/post`
-    const response = await axios.post(url, { walletAddress, proofIDs })
+    const response = await axios.post(url, {
+        walletAddress,
+        proofIDs,
+        title,
+        body,
+    })
     console.log('got response: ', response)
     const d: { postID?: string } = response.data
     if (!d?.postID) throw new Error('unable to make post')

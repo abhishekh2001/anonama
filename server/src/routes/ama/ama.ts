@@ -40,13 +40,13 @@ router.get('/post/:postID', async (req, res) => {
 })
 
 router.post('/post', async (req, res) => {
-    const { walletAddress, proofIDs } = JSON.parse(req.body)
-    console.log('post post: ', walletAddress, proofIDs)
+    const { walletAddress, proofIDs, title, body } = JSON.parse(req.body)
+    console.log('post post: ', walletAddress, proofIDs, title, body)
     if (!walletAddress || !proofIDs) {
         res.status(500).json({ error: 'invalid body parameters passed' })
     } else {
         try {
-            const post = await createPost(walletAddress, proofIDs)
+            const post = await createPost(walletAddress, proofIDs, title, body)
             res.json({ postID: post._id })
         } catch (err) {
             console.log(err)

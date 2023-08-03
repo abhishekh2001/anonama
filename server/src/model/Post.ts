@@ -17,11 +17,15 @@ const CommentSchema = new Schema<IComment>({
 const Comment = model('Comment', CommentSchema)
 
 interface IPost extends Document {
+    title: string
+    body: string
     proofs: Types.ObjectId
     comments: Types.ObjectId[]
 }
 
 const PostSchema = new Schema<IPost>({
+    title: { type: String, required: true },
+    body: { type: String, required: true },
     proofs: [{ type: Schema.Types.ObjectId, ref: 'ProofStatus' }],
     comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 })

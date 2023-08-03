@@ -22,12 +22,15 @@ const HomePage = () => {
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             {posts.map((post) => {
                                 return (
-                                    <div className="border border-indigo-200 bg-slate-100 hover:shadow-inner flex p-8 mb-4">
+                                    <div className="border border-indigo-200 bg-gray-100 flex p-8 mb-4">
                                         <Link
                                             key={post._id}
                                             to={`/view/${post._id}`}
                                         >
-                                            AMA {post._id}
+                                            <span className="text-gray-400">
+                                                AMA {post._id}
+                                            </span>{' '}
+                                            {post.title}
                                         </Link>
                                     </div>
                                 )

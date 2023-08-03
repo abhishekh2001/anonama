@@ -54,10 +54,16 @@ const ShowPostDetails: React.FC<PostDisplayT> = ({ postID }) => {
                     <div className="sm:flex sm:justify-between sm:items-center mb-8">
                         <div className="px-4 sm:px-6 lg:px-8 py-8 w-full max-w-9xl mx-auto">
                             <div className="grid grid-cols-1 sm:auto-cols-max justify-center divide-y border-slate-200 border-2 rounded-lg p-8">
-                                <div className="flex flex-col w-full  ">
-                                    <p className="text-lg font-bold">{`AMA: ${
+                                <div className="flex flex-col w-full gap-1">
+                                    <p className="text-xs text-gray-400">{`AMA: ${
                                         post?._id ?? '...'
                                     }`}</p>
+                                    <p className="text-3xl font-bold my-2">
+                                        {post?.title ?? ''}
+                                    </p>
+                                    <div className="p-4 border-0 rounded-md bg-slate-50">
+                                        <p>{post?.body ?? ''}</p>
+                                    </div>
 
                                     <DisplayVerifiedClaims
                                         claimData={post?.proofs ?? []}

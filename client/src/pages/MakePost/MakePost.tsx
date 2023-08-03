@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Example } from '../../components/ClaimVerificationRequest'
 import Sidebar from '../../partials/Sidebar'
 import Header from '../../partials/Header'
@@ -12,7 +12,8 @@ type ModalPropType = {
 }
 
 const MakePost: React.FC = () => {
-    // const [modal, setModal] = useState<boolean>(false)
+    const textAreaRef = useRef<HTMLTextAreaElement>(null)
+    const titleInput = useRef<HTMLInputElement>(null)
     const [providerDetails, setProviderDetails] =
         useState<ModalPropType | null>(null)
 
@@ -22,9 +23,23 @@ const MakePost: React.FC = () => {
 
     const makePostOnClick = async () => {
         const proofIDs = multiClaimsData.map((claim) => claim._id)
+        if (!textAreaRef.current || !titleInput.current) {
+            throw new Error('empty text fields')
+        }
+
+        console.log(
+            'have: ',
+            titleInput.current.value,
+            textAreaRef.current.value
+        )
 
         try {
-            const postID = await makePost('0x123', proofIDs)
+            const postID = await makePost(
+                '0x123',
+                proofIDs,
+                titleInput.current.value,
+                textAreaRef.current.value
+            )
             console.log('made post:', postID)
         } catch (err) {
             console.log('could not make post: ', err)
@@ -84,6 +99,31 @@ const MakePost: React.FC = () => {
                                         Make post
                                     </span>
                                 </button>
+                            </div>
+                            <div className="py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                                <label htmlFor="title" className="sr-only">
+                                    Title
+                                </label>
+                                <input
+                                    ref={titleInput}
+                                    id="title"
+                                    className="w-1/2 p-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 focus:outline-none"
+                                    placeholder="Title"
+                                    required
+                                ></input>
+                            </div>
+                            <div className="py-2 bg-white rounded-t-lg dark:bg-gray-800">
+                                <label htmlFor="comment" className="sr-only">
+                                    Your comment
+                                </label>
+                                <textarea
+                                    ref={textAreaRef}
+                                    id="comment"
+                                    rows={4}
+                                    className="w-full p-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 focus:outline-none"
+                                    placeholder="Post body..."
+                                    required
+                                ></textarea>
                             </div>
                             <div className="grid grid-cols-12 gap-6">
                                 {multiClaimsData.map((claim) => {

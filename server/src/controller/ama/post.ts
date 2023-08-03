@@ -82,8 +82,14 @@ export const getWalletPosts = async (walletAddress: string) => {
     return poster
 }
 
-export const createPost = async (walletAddress: string, proofIDs: string[]) => {
-    let post = new Post({ proofs: proofIDs })
+export const createPost = async (
+    walletAddress: string,
+    proofIDs: string[],
+    title: string,
+    body: string
+) => {
+    console.log('save with title: ', title)
+    let post = new Post({ proofs: proofIDs, title: title, body: body })
     await post.save()
 
     let poster = await Poster.findOne({ walletAddress })
