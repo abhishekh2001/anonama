@@ -1,3 +1,5 @@
+import plugin from 'tailwindcss/plugin'
+
 /** @type {import('tailwindcss').Config} */
 // export default {
 //     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
@@ -86,4 +88,19 @@ export default {
             },
         },
     },
+    plugins: [
+        // eslint-disable-next-line global-require, no-undef
+        require('@tailwindcss/forms'),
+        // add custom variant for expanding sidebar
+        plugin(({ addVariant, e }) => {
+            addVariant('sidebar-expanded', ({ modifySelectors, separator }) => {
+                modifySelectors(
+                    ({ className }) =>
+                        `.sidebar-expanded .${e(
+                            `sidebar-expanded${separator}${className}`
+                        )}`
+                )
+            })
+        }),
+    ],
 }

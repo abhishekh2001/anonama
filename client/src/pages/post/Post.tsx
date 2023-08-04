@@ -10,6 +10,7 @@ import Header from '../../partials/Header'
 import PostQuestion from '../../components/PostQuestion'
 import CommentDisplay from '../../partials/Comment'
 import { useParams } from 'react-router-dom'
+import { useAccount } from 'wagmi'
 
 type PostDisplayT = {
     postID: string
@@ -22,20 +23,45 @@ const Post: React.FC = () => {
 }
 
 const ShowPostDetails: React.FC<PostDisplayT> = ({ postID }) => {
+    const [errorMessage, setErrorMessage] = useState<string | undefined>()
+
     const [post, setPost] = useState<IPost>()
-    const userWallet = '0x3341'
+
+    const { address: userWallet } = useAccount()
 
     const handleCommentSubmit = (text: string) => {
+        if (!userWallet) {
+            setErrorMessage('wallet must be connected')
+            return
+        }
         makeCommentOnPost(userWallet, text, postID).then(() =>
             window.location.reload()
         )
     }
 
     const handleResponseSubmit = (text: string, commentID: string) => {
+        if (!post) {
+            setErrorMessage('post unavailable')
+            return
+        }
+
+        if (!userWallet) {
+            setErrorMessage('wallet must be connected to comment')
+            return
+        }
+
+        if (post.walletAddress !== userWallet) {
+            setErrorMessage('only the author of the post can reply')
+        }
+
         makeCommentOnComment(userWallet, text, commentID).then(() =>
             window.location.reload()
         )
     }
+
+    useEffect(() => {
+        console.log('error: ', errorMessage)
+    }, [errorMessage])
 
     useEffect(() => {
         getSinglePost(postID).then((post) => setPost(post))

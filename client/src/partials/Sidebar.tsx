@@ -1,31 +1,48 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { NavLink, useLocation } from 'react-router-dom'
 import SidebarLinkGroup from './SidebarLinkGroup'
 import SBSubGroup from './SidebarLinkSubGroups'
 import { sidebarManagerGroupMap } from '../utils/verifCats'
 
 type SidebarPropsT = {
+    sidebarOpen: boolean
+    setSidebarOpen: (value: boolean) => void
     handleCategoryClick: (provider: string, text: string) => void
 }
 
-const Sidebar: React.FC<SidebarPropsT> = ({ handleCategoryClick }) => {
+const Sidebar: React.FC<SidebarPropsT> = ({
+    handleCategoryClick,
+    sidebarOpen,
+    setSidebarOpen,
+}) => {
     const catMap = sidebarManagerGroupMap(handleCategoryClick)
 
     const location = useLocation()
     const { pathname } = location
     console.log('pathname: ', pathname)
 
+    const [sidebarExpanded, setSidebarExpanded] = useState(false)
+
     const trigger = useRef(null)
     const sidebar = useRef(null)
 
-    const sidebarOpen = true
+    console.log('got sidebarOpen: ', sidebarOpen)
 
-    const storedSidebarExpanded = localStorage.getItem('sidebar-expanded')
-    const [sidebarExpanded, setSidebarExpanded] = useState(
-        storedSidebarExpanded === null
-            ? false
-            : storedSidebarExpanded === 'true'
-    )
+    useEffect(() => {
+        console.log('sidebar updated: ', sidebarOpen)
+    }, [sidebarOpen])
+
+    useEffect(() => {
+        if (sidebarExpanded) {
+            document.querySelector('body')?.classList.add('sidebar-expanded')
+        } else {
+            document.querySelector('body')?.classList.remove('sidebar-expanded')
+        }
+    }, [sidebarExpanded])
+
+    useEffect(() => {
+        console.log('got sidebarexpanded: ', sidebarExpanded)
+    }, [sidebarExpanded])
 
     // close if the esc key is pressed
     // fix this
@@ -55,9 +72,10 @@ const Sidebar: React.FC<SidebarPropsT> = ({ handleCategoryClick }) => {
                     {/* Close button */}
                     <button
                         ref={trigger}
+                        onClick={() => setSidebarOpen(!sidebarOpen)}
+                        aria-expanded={sidebarOpen}
                         className="lg:hidden text-slate-500 hover:text-slate-400"
                         aria-controls="sidebar"
-                        aria-expanded={sidebarOpen}
                     >
                         <span className="sr-only">Close sidebar</span>
                         <svg

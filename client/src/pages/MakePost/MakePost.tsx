@@ -20,6 +20,8 @@ const MakePost: React.FC = () => {
     const [providerDetails, setProviderDetails] =
         useState<ModalPropType | null>(null)
 
+    const [sidebarOpen, setSidebarOpen] = useState(true)
+
     const multiClaimsData = useReclaimMultiClaimDataStore(
         (state) => state.multiClaimsData
     )
@@ -81,7 +83,11 @@ const MakePost: React.FC = () => {
     return (
         <div className="flex h-screen overflow-hidden">
             {/* <p className="text-xl">Make a post</p> */}
-            <Sidebar handleCategoryClick={handleCategoryClick} />
+            <Sidebar
+                handleCategoryClick={handleCategoryClick}
+                sidebarOpen={sidebarOpen}
+                setSidebarOpen={setSidebarOpen}
+            />
             {providerDetails && (
                 <Example
                     provider={providerDetails.provider}
@@ -94,9 +100,9 @@ const MakePost: React.FC = () => {
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                 {/*  Site header */}
                 <Header
-                    sidebarOpen={true}
+                    sidebarOpen={sidebarOpen}
                     headerTitle={'Post an AMA'}
-                    setSidebarOpen={() => {}}
+                    setSidebarOpen={setSidebarOpen}
                 />
 
                 <main>

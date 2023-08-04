@@ -11,6 +11,7 @@ export interface IComment {
 export interface IPost {
     _id: string
     title: string
+    walletAddress: string
     body: string
     proofs: TSingleClaimData[]
     comments?: IComment[]
