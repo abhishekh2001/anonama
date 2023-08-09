@@ -6,6 +6,7 @@ import useReclaimMultiClaimDataStore from '../../stores/claims'
 import { makePost } from '../../utils/posts'
 import { useAccount } from 'wagmi'
 import ChooseClaim from './ChooseClaim'
+import { useNavigate } from 'react-router-dom'
 
 type ModalPropType = {
     provider: string
@@ -19,6 +20,8 @@ const MakePost: React.FC = () => {
     const titleInput = useRef<HTMLInputElement>(null)
     const [providerDetails, setProviderDetails] =
         useState<ModalPropType | null>(null)
+
+    const navigate = useNavigate()
 
     const [sidebarOpen, setSidebarOpen] = useState(true)
 
@@ -61,6 +64,7 @@ const MakePost: React.FC = () => {
                 textAreaRef.current.value
             )
             console.log('made post:', postID)
+            navigate(`/view/${postID}`)
         } catch (err) {
             console.log('could not make post: ', err)
         }
