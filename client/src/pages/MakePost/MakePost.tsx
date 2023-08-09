@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { Example } from '../../components/ClaimVerificationRequest'
-import Sidebar from '../../partials/Sidebar'
 import Header from '../../partials/Header'
 import ClaimViewer from '../../partials/PostClaimsDisplay'
 import useReclaimMultiClaimDataStore from '../../stores/claims'
 import { makePost } from '../../utils/posts'
 import { useAccount } from 'wagmi'
+import ChooseClaim from './ChooseClaim'
+import { useNavigate } from 'react-router-dom'
 
 type ModalPropType = {
     provider: string
@@ -19,6 +20,8 @@ const MakePost: React.FC = () => {
     const titleInput = useRef<HTMLInputElement>(null)
     const [providerDetails, setProviderDetails] =
         useState<ModalPropType | null>(null)
+
+    const navigate = useNavigate()
 
     const [sidebarOpen, setSidebarOpen] = useState(true)
 
@@ -61,6 +64,7 @@ const MakePost: React.FC = () => {
                 textAreaRef.current.value
             )
             console.log('made post:', postID)
+            navigate(`/view/${postID}`)
         } catch (err) {
             console.log('could not make post: ', err)
         }
@@ -76,6 +80,10 @@ const MakePost: React.FC = () => {
         console.log('new reclaimURL: ', providerDetails?.provider)
     }, [providerDetails])
 
+    useEffect(() => {
+        document.title = '+Ask me anything'
+    }, [])
+
     const handleOnModalClose = (status: boolean) => {
         if (status === false) setProviderDetails(null)
     }
@@ -83,11 +91,11 @@ const MakePost: React.FC = () => {
     return (
         <div className="flex h-screen overflow-hidden">
             {/* <p className="text-xl">Make a post</p> */}
-            <Sidebar
+            {/* <Sidebar
                 handleCategoryClick={handleCategoryClick}
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
-            />
+            /> */}
             {providerDetails && (
                 <Example
                     provider={providerDetails.provider}
@@ -101,7 +109,7 @@ const MakePost: React.FC = () => {
                 {/*  Site header */}
                 <Header
                     sidebarOpen={sidebarOpen}
-                    headerTitle={'Post an AMA'}
+                    headerTitle={'VerifiedAMA'}
                     setSidebarOpen={setSidebarOpen}
                 />
 
@@ -139,10 +147,11 @@ const MakePost: React.FC = () => {
                                         <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                                     </svg>
                                     <span className="hidden xs:block ml-2">
-                                        Make post
+                                        Post an AMA
                                     </span>
                                 </button>
                             </div>
+
                             <div className="py-2 bg-white rounded-t-lg dark:bg-gray-800">
                                 <label htmlFor="title" className="sr-only">
                                     Title
@@ -164,9 +173,14 @@ const MakePost: React.FC = () => {
                                     id="comment"
                                     rows={4}
                                     className="w-full p-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 focus:outline-none"
-                                    placeholder="Post body..."
+                                    placeholder="VerifiedAMA -- Pseudonymous yet verified..."
                                     required
                                 ></textarea>
+                            </div>
+                            <div>
+                                <ChooseClaim
+                                    handleCategoryClick={handleCategoryClick}
+                                />
                             </div>
                             <div className="grid grid-cols-12 gap-6">
                                 {multiClaimsData.map((claim) => {
