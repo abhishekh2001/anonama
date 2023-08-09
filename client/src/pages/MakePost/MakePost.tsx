@@ -1,6 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
 import { Example } from '../../components/ClaimVerificationRequest'
-import Sidebar from '../../partials/Sidebar'
 import Header from '../../partials/Header'
 import ClaimViewer from '../../partials/PostClaimsDisplay'
 import useReclaimMultiClaimDataStore from '../../stores/claims'
