@@ -74,7 +74,7 @@ const ShowPostDetails: React.FC<PostDisplayT> = ({ postID }) => {
             <div className="relative flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
                 <Header
                     sidebarOpen={true}
-                    headerTitle={'view'}
+                    headerTitle={'VerifiedAMA'}
                     setSidebarOpen={() => {}}
                 />
 

@@ -105,7 +105,7 @@ const MakePost: React.FC = () => {
                 {/*  Site header */}
                 <Header
                     sidebarOpen={sidebarOpen}
-                    headerTitle={'Post an AMA'}
+                    headerTitle={'VerifiedAMA'}
                     setSidebarOpen={setSidebarOpen}
                 />
 
@@ -143,7 +143,7 @@ const MakePost: React.FC = () => {
                                         <path d="M15 7H9V1c0-.6-.4-1-1-1S7 .4 7 1v6H1c-.6 0-1 .4-1 1s.4 1 1 1h6v6c0 .6.4 1 1 1s1-.4 1-1V9h6c.6 0 1-.4 1-1s-.4-1-1-1z" />
                                     </svg>
                                     <span className="hidden xs:block ml-2">
-                                        Make post
+                                        Post an AMA
                                     </span>
                                 </button>
                             </div>
@@ -169,7 +169,7 @@ const MakePost: React.FC = () => {
                                     id="comment"
                                     rows={4}
                                     className="w-full p-2 text-sm text-gray-900 bg-white border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400 focus:outline-none"
-                                    placeholder="Post body..."
+                                    placeholder="VerifiedAMA -- Pseudonymous yet verified..."
                                     required
                                 ></textarea>
                             </div>
