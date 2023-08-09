@@ -16,6 +16,7 @@
     "@thirdweb-dev/react": "^3.14.20",
     "@thirdweb-dev/sdk": "^3.10.40",
     "axios": "^1.4.0",
+    "classnames": "^2.3.2",
     "ethers": "^5.7.2",
     "qrcode.react": "^3.1.0",
     "react": "^18.2.0",

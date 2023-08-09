@@ -6,6 +6,7 @@ import ClaimViewer from '../../partials/PostClaimsDisplay'
 import useReclaimMultiClaimDataStore from '../../stores/claims'
 import { makePost } from '../../utils/posts'
 import { useAccount } from 'wagmi'
+import ChooseClaim from './ChooseClaim'
 
 type ModalPropType = {
     provider: string
@@ -76,6 +77,10 @@ const MakePost: React.FC = () => {
         console.log('new reclaimURL: ', providerDetails?.provider)
     }, [providerDetails])
 
+    useEffect(() => {
+        document.title = '+Ask me anything'
+    }, [])
+
     const handleOnModalClose = (status: boolean) => {
         if (status === false) setProviderDetails(null)
     }
@@ -83,11 +88,11 @@ const MakePost: React.FC = () => {
     return (
         <div className="flex h-screen overflow-hidden">
             {/* <p className="text-xl">Make a post</p> */}
-            <Sidebar
+            {/* <Sidebar
                 handleCategoryClick={handleCategoryClick}
                 sidebarOpen={sidebarOpen}
                 setSidebarOpen={setSidebarOpen}
-            />
+            /> */}
             {providerDetails && (
                 <Example
                     provider={providerDetails.provider}
@@ -143,6 +148,7 @@ const MakePost: React.FC = () => {
                                     </span>
                                 </button>
                             </div>
+
                             <div className="py-2 bg-white rounded-t-lg dark:bg-gray-800">
                                 <label htmlFor="title" className="sr-only">
                                     Title
@@ -167,6 +173,11 @@ const MakePost: React.FC = () => {
                                     placeholder="Post body..."
                                     required
                                 ></textarea>
+                            </div>
+                            <div>
+                                <ChooseClaim
+                                    handleCategoryClick={handleCategoryClick}
+                                />
                             </div>
                             <div className="grid grid-cols-12 gap-6">
                                 {multiClaimsData.map((claim) => {
